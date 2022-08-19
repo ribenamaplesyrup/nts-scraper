@@ -6,7 +6,7 @@ If you enjoy using this script, please also consider [becoming an NTS supporter]
 
 ## Requirements
 
-You will require a user-token to authenticate with the Discogs API. For this, you'll need to [generate a user-token from your developer settings]("https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#user-token-authentication") on the Discogs website. Until I implement a more elegant way of adding tokens, you will need to hardcode it into the script as the string value for the `discogs_token` variable.
+You will require a user-token to authenticate with the Discogs API. For this, you'll need to [generate a user-token from your developer settings](https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#user-token-authentication) on the Discogs website. Until I implement a more elegant way of adding tokens, you will need to hardcode it into the script as the string value for the `discogs_token` variable.
 
 ## Installation
 
