@@ -1,4 +1,4 @@
-name: nts-radio
+name: nts
 channels:
   - anaconda
   - defaults
