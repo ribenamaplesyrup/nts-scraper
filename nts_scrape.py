@@ -14,7 +14,6 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleW
 base_url = "https://www.nts.live"
 discogs_token = ""
 discogs_client = discogs_client.Client('ExampleApplication/0.1', user_token=discogs_token)
-shows_url = "https://www.nts.live/shows/james-k"
 
 # selenium setup
 options = Options()
