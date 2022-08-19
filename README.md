@@ -1,6 +1,6 @@
 # NTS Radio Scraper
 
-The following python script can be used to generate a csv file containing all of the tracks and associated metadata for an NTS show with multiple episodes. The script uses a combination of `requests`, `beautifulsoup` and `selenium` to extract base metadata from NTS (track name, artist, year, label). For tracks with a Discogs link, futher metadata is extracted through the Discogs API, such as country, genre and styles.
+The following python script can be used to generate a csv file containing all of the tracks and associated metadata for an NTS show with multiple episodes. The script uses a combination of `requests`, `beautifulsoup` and `selenium` to extract base metadata from NTS (track name, artist, year, label). For tracks with a Discogs link, futher metadata is extracted through the Discogs API, such as country, genre and styles, using this nice [Discogs client library](https://github.com/joalla/discogs_client).
 
 If you enjoy using this script, please also consider [becoming an NTS supporter](https://www.nts.live/supporters) to help them continue providing an incredible platform for discovering new music.
 
