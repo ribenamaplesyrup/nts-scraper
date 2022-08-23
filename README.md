@@ -20,5 +20,13 @@ conda activate nts
 ## Example Usage
 
 ```bash
+python3 nts_scrape.py <nts show url>
 python3 nts_scrape.py https://www.nts.live/shows/oli-xl
+```
+
+Once you have scraped metadata for multiple shows, you can use 'generate_network.py' to create mappings of how shows connect through playing artists from the same record labels. The script will generate a JSON file containing nodes (shows, artists and record labels) and links between nodes:
+
+```bash
+python3 generate_network.py <multiple csv files generated from nts_scrape.py>
+python3 generate_network.py james-k_tracklist.csv loraine-james_tracklist.csv oli-xl_tracklist.csv
 ```
