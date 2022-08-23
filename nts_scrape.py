@@ -126,12 +126,12 @@ def generate_csv(show_url: str):
     # test creating csv
     with open(filename, 'w') as test_csv:
         pass
-    return filename
+    return filename,prefix
 
 def main(show_url: str):
     # returns combined tracklist for every episode of NTS show
     print(show_url)
-    filename = generate_csv(show_url)
+    filename,prefix = generate_csv(show_url)
     soup = expand_shows_html(show_url)
     episodes = get_episodes(soup)
     full_tracklist = []
@@ -151,6 +151,7 @@ def main(show_url: str):
                     episode_tracklist[j]["country"], episode_tracklist[j]["genre"], episode_tracklist[j]["styles"] = get_discogs_metadata(track['discogs_url'])
         full_tracklist += episode_tracklist
     df = pd.DataFrame(full_tracklist)
+    df['mix'] = prefix.replace('-', ' ')
     df.to_csv(filename, encoding='utf-8', index=False)
     print("Tracklist saved to " + filename)
 
