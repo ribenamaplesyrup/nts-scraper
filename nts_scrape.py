@@ -12,7 +12,7 @@ import sys
 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 base_url = "https://www.nts.live"
-discogs_token = ""
+discogs_token = "KSdqLBFZKxQFieTmFJrGsmBhTqfwKrwtiuyjotyx"
 discogs_client = discogs_client.Client('ExampleApplication/0.1', user_token=discogs_token)
 
 # selenium setup
@@ -51,7 +51,7 @@ def get_tracklist(soup: "bs4.BeautifulSoup object", episode: str):
         artist = element.find("span",{"class":"track__artist"}).text
         track = element.find("span",{"class":"track__title"}).text
         url = get_url(element, track)
-        tracklist.append({"artist": artist,
+        tracklist.append({"artist": format_name(artist),
                           "track" : track,
                           "url" : url,
                           "number" : str(episode)})
@@ -104,7 +104,8 @@ def get_discogs_metadata(discogs_url: str):
     country = discogs_client.release(release_number[0]).country
     genres = discogs_client.release(release_number[0]).genres
     styles = discogs_client.release(release_number[0]).styles
-    return country, genres, styles
+    label_url = discogs_client.release(release_number[0]).labels[0].url
+    return country, genres, styles, label_url
 
 def expand_shows_html(url: str):
     # scroll to the bottom of page until all shows are loaded in NTS shows html
@@ -132,9 +133,14 @@ def generate_csv(show_url: str):
         pass
     return filename
 
+def format_name(name: str):
+    # format name - for now just removed commas if last character
+    if ',' in name:
+        name = name.replace(',','')
+    return name
+
 def main(show_url: str):
     # returns combined tracklist for every episode of NTS show
-    print(show_url)
     filename = generate_csv(show_url)
     soup = expand_shows_html(show_url)
     episodes = get_episodes(soup)
@@ -146,13 +152,15 @@ def main(show_url: str):
         episode_html = get_html(episode_url)
         episode_tracklist = get_tracklist(episode_html, "0")
         for j, track in enumerate(episode_tracklist):
+            episode_tracklist[j]["show_url"] = show_url
             if track['url']:
                 url = base_url + track['url']
+                episode_tracklist[j]["artist_url"] = url
                 artist_html = get_html(url)
                 artist_html_with_metadata = find_track_metadata(url, artist_html, track['track'])
                 episode_tracklist[j]["label"], episode_tracklist[j]["year"], episode_tracklist[j]["discogs_url"] = get_track_metadata(artist_html_with_metadata, track['track'])
                 if episode_tracklist[j]["discogs_url"]:
-                    episode_tracklist[j]["country"], episode_tracklist[j]["genre"], episode_tracklist[j]["styles"] = get_discogs_metadata(track['discogs_url'])
+                    episode_tracklist[j]["country"], episode_tracklist[j]["genre"], episode_tracklist[j]["styles"], episode_tracklist[j]["label_url"] = get_discogs_metadata(track['discogs_url'])
         full_tracklist += episode_tracklist
     df = pd.DataFrame(full_tracklist)
     df['mix'] = get_mix_title(soup)
