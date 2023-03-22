@@ -12,7 +12,7 @@ import sys
 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 base_url = "https://www.nts.live"
-discogs_token = "KSdqLBFZKxQFieTmFJrGsmBhTqfwKrwtiuyjotyx"
+discogs_token = ""
 discogs_client = discogs_client.Client('ExampleApplication/0.1', user_token=discogs_token)
 
 # selenium setup
